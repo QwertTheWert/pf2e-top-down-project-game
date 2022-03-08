@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraMovement : MonoBehaviour {
-
+public class CameraAnchorMovement : MonoBehaviour {
 	public float moveSpeed = 5f;
-	public float scrollSpeed = 5f;
 	public Rigidbody rb;
 
 	Vector3 movement;
