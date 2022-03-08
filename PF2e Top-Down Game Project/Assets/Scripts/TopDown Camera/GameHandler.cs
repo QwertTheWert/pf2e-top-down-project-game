@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameHandler : MonoBehaviour
 {
-	[SerializeField] private CameraFollow cameraFollow;
+	[SerializeField] private CameraFollowTD cameraFollow;
 	[SerializeField] private Transform playerTransform;
 	// [SerializeField] private int targetFrameRate = 60;
 	[SerializeField] private float zoom = 5f;

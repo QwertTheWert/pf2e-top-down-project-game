@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraFollow : MonoBehaviour {
+public class CameraFollowTD : MonoBehaviour {
 
 	public float cameraMoveSpeed = 10f;
 	public float cameraZoomSpeed = 1f;
