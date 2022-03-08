@@ -5,30 +5,59 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour {
 
-	public Func<Vector3> getCameraFollowPositionFunc;
-	public void Setup (Func<Vector3> getCameraFollowPositionFunc) {
-		this.getCameraFollowPositionFunc = getCameraFollowPositionFunc;
-	}
-	// Start is called before the first frame update
-	void Start()
-	{
+	public float cameraMoveSpeed = 10f;
+	public float cameraZoomSpeed = 1f;
 		
+	private Camera myCamera;
+	private Func<float> GetCameraZoomFunc;
+
+	public Func<Vector3> GetCameraFollowPositionFunc;
+	public void Setup (Func<Vector3> GetCameraFollowPositionFunc, Func<float> GetCameraZoomFunc) {
+		this.GetCameraFollowPositionFunc = GetCameraFollowPositionFunc;
+		this.GetCameraZoomFunc = GetCameraZoomFunc;
+	}
+
+	// Start
+	private void Start() {
+		myCamera = transform.GetComponent<Camera>();
+	}
+
+	public void SetCameraFollowPosition(Vector3 cameraFollowPosition) {
+		SetGetCameraFollowPositionFunc(() => cameraFollowPosition);
+	}
+	public void SetGetCameraFollowPositionFunc(Func<Vector3> GetCameraFollowPositionFunc) {
+		this.GetCameraFollowPositionFunc = GetCameraFollowPositionFunc;
+	}
+
+	public void SetCameraZoom(float cameraZoom) {
+		SetGetCameraZoomFunc(() => cameraZoom);
+	}
+	public void SetGetCameraZoomFunc(Func<float> GetCameraZoomFunc) {
+		this.GetCameraZoomFunc = GetCameraZoomFunc;
 	}
 
 	// Update is called once per frame
-	void Update()
-	{
-		Vector3 cameraFollowPosition = getCameraFollowPositionFunc();
+	void FixedUpdate() {
+		HandleMovement();
+		HandleZoom();
+	}
+
+	private void HandleMovement() {
+		Vector3 cameraFollowPosition = GetCameraFollowPositionFunc();
 		cameraFollowPosition.y = transform.position.y;
 
-		Vector3 camereMoveDir = (cameraFollowPosition - transform.position).normalized;
+		Vector3 cameraMoveDir = (cameraFollowPosition - transform.position).normalized;
 
 		float distance = Vector3.Distance(cameraFollowPosition, transform.position);
-		float cameraMoveSpeed = 5f;
 
+		transform.position += cameraMoveDir * distance * cameraMoveSpeed * Time.fixedDeltaTime;
+	}
 
+	private void HandleZoom() {
+		float cameraZoom = GetCameraZoomFunc();
 
-		transform.position = transform.position + camereMoveDir * distance * cameraMoveSpeed * Time.deltaTime;
+		float cameraZoomDifference = cameraZoom - myCamera.orthographicSize;
 
+		myCamera.orthographicSize += cameraZoomDifference * cameraZoomSpeed * Time.fixedDeltaTime;
 	}
 }
