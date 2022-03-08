@@ -56,7 +56,7 @@ public class CameraFollow : MonoBehaviour {
 	private void HandleZoom() {
 		float cameraZoom = GetCameraZoomFunc();
 
-		float cameraZoomDifference = cameraZoom - myCamera.orthographicSize;
+		float cameraZoomDifference = Mathf.Clamp(cameraZoom - myCamera.orthographicSize,-3,5);
 
 		myCamera.orthographicSize += cameraZoomDifference * cameraZoomSpeed * Time.fixedDeltaTime;
 	}

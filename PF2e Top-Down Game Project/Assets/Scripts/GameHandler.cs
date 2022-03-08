@@ -28,10 +28,10 @@ public class GameHandler : MonoBehaviour
 		}
 
 		if (Input.mouseScrollDelta.y > 0) {
-			zoom -= zoomChangeAmount * Time.fixedDeltaTime * 100;
+			zoom -= zoomChangeAmount * Time.fixedDeltaTime * 10;
 		}
 		if (Input.mouseScrollDelta.y < 0) {
-			zoom += zoomChangeAmount * Time.fixedDeltaTime * 100;
+			zoom += zoomChangeAmount * Time.fixedDeltaTime * 10;
 		}
 
 		zoom = Mathf.Clamp(zoom, minZoom, maxZoom);
