@@ -994,6 +994,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4180c95cb63c5c04999528e736f9a742, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraMoveSpeed: 10
+  cameraZoomSpeed: 1
 --- !u!1 &1037365038
 GameObject:
   m_ObjectHideFlags: 0
@@ -1225,7 +1227,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1444485380}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1309,7 +1311,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f46cb919aa62cec448d0d6559885d767, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
+  moveSpeed: 5
+  edgeSize: 50
+  enableEdgeScroll: 0
   rb: {fileID: 1444485385}
 --- !u!1 &1513299925
 GameObject:
@@ -1737,7 +1741,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraFollow: {fileID: 963194231}
   playerTransform: {fileID: 1444485384}
-  targetFrameRate: 60
+  zoom: 5
+  zoomChangeAmount: 10
+  minZoom: 5
+  maxZoom: 40
 --- !u!4 &1763334211
 Transform:
   m_ObjectHideFlags: 0
