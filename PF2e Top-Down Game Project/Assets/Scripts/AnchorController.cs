@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AnchorController : MonoBehaviour {
-	public Rigidbody rb;
 	[SerializeField] private float cameraSpeed = 5f;
-	private Vector3 forward, right;
+	[SerializeField] private float edgeSize = 100f;
+	[SerializeField] private bool edgeScrollEnabled = true;
+	private Vector3 forward, right, direction, movement;
+	private Rigidbody rb;
+
 
 	void Start() {
+		rb = GetComponent<Rigidbody>();
 		forward = Camera.main.transform.forward;
 		forward.y = 0;
 		forward = Vector3.Normalize(forward);
@@ -15,14 +19,37 @@ public class AnchorController : MonoBehaviour {
 	}
 
 	void Update() {
-		if(Input.anyKey) GetMoveVector();
+		GetMoveVector();
+		if (edgeScrollEnabled) EdgeScroll();
+	}
+
+	void FixedUpdate() {
+		Vector3 rightMovement = right * cameraSpeed * Time.fixedDeltaTime * direction.x;
+		Vector3 upMovement = forward * cameraSpeed * Time.fixedDeltaTime * direction.z;
+		movement = rightMovement + upMovement;
+		rb.MovePosition(rb.position + movement);
 	}
 
 	void GetMoveVector() {
-		Vector3 direction = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-		Vector3 rightMovement = right * cameraSpeed * Time.deltaTime * Input.GetAxis("Horizontal");
-		Vector3 upMovement = forward * cameraSpeed * Time.deltaTime * Input.GetAxis("Vertical");
-		transform.position += rightMovement;
-		transform.position += upMovement;
+		direction = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+	}
+
+	void EdgeScroll() {
+		// Edge Right
+		if (Input.mousePosition.x > Screen.width - edgeSize) {
+			direction.x = 1;
+		}
+		// Edge Left
+		if (Input.mousePosition.x < edgeSize) {
+			direction.x = -1;
+		}
+		// Edge Up
+		if (Input.mousePosition.y > Screen.height - edgeSize) {
+			direction.z = 1;
+		}
+		// Edge Down
+		if (Input.mousePosition.y < edgeSize) {
+			direction.z = -1;
+		}
 	}
 }
