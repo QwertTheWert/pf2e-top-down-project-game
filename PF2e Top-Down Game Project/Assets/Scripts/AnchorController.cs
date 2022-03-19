@@ -5,7 +5,7 @@ using UnityEngine;
 public class AnchorController : MonoBehaviour {
 	[SerializeField] private float cameraSpeed = 5f;
 	[SerializeField] private float edgeSize = 100f;
-	[SerializeField] private bool edgeScrollEnabled = true;
+	[SerializeField] private bool edgeScrollEnabled = false;
 	private Vector3 forward, right, direction, movement;
 	private Rigidbody rb;
 
